@@ -45,6 +45,7 @@ driver.execute_script(js)
 
 # Submit login
 submit_button = driver.find_element_by_id('btnEntrar')
+driver.execute_script("window.scrollTo(0, "+submit_button.get_location().y+")")
 submit_button.click()
 
 # Wait until dashboard page has loaded
