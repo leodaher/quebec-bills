@@ -6,7 +6,6 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-print(os.environ)
 
 # Configure logging
 logging.basicConfig(filename='/var/log/quebec-bills.log', format='%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
