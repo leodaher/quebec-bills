@@ -1,5 +1,6 @@
 import os
 import logging
+import time
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -18,7 +19,9 @@ options = webdriver.ChromeOptions()
 profile = {"download.default_directory": download_dir,
            "plugins.always_open_pdf_externally": True}
 options.add_experimental_option("prefs", profile)
-options.add_argument('headless')
+#options.add_argument('--headless')
+options.add_argument('--no-sandbox')
+options.add_argument('--disable-dev-shm-usage')
 driver = webdriver.Chrome(options=options)
 logging.info("Browser setup done")
 
@@ -45,12 +48,11 @@ driver.execute_script(js)
 
 # Submit login
 submit_button = driver.find_element_by_id('btnEntrar')
-driver.execute_script("window.scrollTo(0, "+submit_button.get_location().y+")")
+driver.execute_script("window.scrollTo("+str(submit_button.location['x'])+", "+str(submit_button.location['y'])+")")
 submit_button.click()
 
-# Wait until dashboard page has loaded
-WebDriverWait(driver, 60).until(EC.url_contains("meuvivo.vivo.com.br"))
-logging.info("Login successful")
+# XXX: This is hack to wait until login is finished, but should be changed to something better
+time.sleep(60)
 
 # Move to page that has link to the pdf
 driver.get("https://legado.vivo.com.br/portal/site/meuvivo/segundaViaConta?segundaViaConta=sVConta")
